@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="js/easyui/themes/icon.css">
+<script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<table id="dg"></table>
+	</div>
+	<div id="new_dlg">
+		<form id="ff" method="post">
+	    	<table>
+	    		<tr>
+	    			<td>推广词:</td>
+	    			<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 200px"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>搜索量:</td>
+	    			<td><input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email'"  style="width: 200px"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>生效时间:</td>
+	    			<td><input class="easyui-textbox" type="text" name="subject" data-options="required:true"  style="width: 200px"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>失效时间:</td>
+	    			<td><input class="easyui-textbox" name="message" data-options="multiline:true" style="height:60px;width: 200px"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>站点:</td>
+	    			<td>
+	    				<select class="easyui-combobox" name="language" style="width: 200px">
+		    				<option value="0">全部站点</option>
+		    				<option value="1">站点A</option>
+		    				<option value="2">站点B</option>
+	    				</select>
+	    			</td>
+	    		</tr>
+	    	</table>
+	    </form>
+	    <div style="text-align:center;padding:5px">
+	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">提交</a>
+	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeDlg()">取消</a>
+	    </div>
+	</div>
+	<div id="edit_dlg" class="easyui-dialog" title="编辑推广词" data-options="iconCls:'icon-edit'" style="width:400px;height:200px;padding:10px">
+		The dialog content.
+	</div>
+	
+	<script type="text/javascript">
+	function openNewDialog(){
+		$('#ff').form('clear');
+		$('#new_dlg').window('open');
+	}
+	$('#new_dlg').window({
+	    modal:true,
+	    title:'新增推荐词',
+	    iconCls:'icon-add',//图标
+	    closed:true,
+	    collapsible:false,
+	    minimizable:false,
+	    maximizable:false,
+	});
+		$('#dg').datagrid({
+			title:'推广词',
+			iconCls:'icon-edit',//图标
+			border: true, 
+			//width: 'auto', 
+	        height: 'auto', 
+			toolbar: [{ 
+	            text: '添加', 
+	            iconCls: 'icon-add', 
+	            handler: function() { 
+	            	alert("!!!");
+	            	openNewDialog(); 
+	            } 
+	        }, '-', { 
+	            text: '修改', 
+	            iconCls: 'icon-edit', 
+	            handler: function() { 
+	                openUpdateDialog(); 
+	            } 
+	        }], 
+		    url:'testDataService.do?fun=query_promote',
+		    loadFilter: function(data){
+				if (data.data){
+					return data.data;
+				} else {
+					return data;
+				}
+			},
+			singleSelect:true,//是否单选 
+		    columns:[[
+				{field:'id',title:'id'},
+				{field:'word',title:'word'},
+				{field:'cateId',title:'类型', formatter: function(value,row,index){
+					if (value == "1") {
+						return "推荐词";
+					} else {
+						return "其他";
+					} 
+				}},
+				{field:'site',title:'平台', formatter: function(value,row,index){
+					if (value == "1") {
+						return "站点A";
+					} else if (value == "2") {
+						return "站点B";
+					} else if (value == "0") {
+						return "全部站点";
+					} 
+				}},
+				{field:'startTime',title:'生效时间'},
+				{field:'endTime',title:'失效时间'},
+				{field:'state',title:'状态', align:'right',formatter: function(value,row,index){
+					if (value == "0") {
+						return "待上线";
+					} else if (value == "1") {
+						return "已上线";
+					} else if (value == "2") {
+						return "已下线";
+					} 
+				}, styler: function(value,row,index){
+					if (value == "0") {
+						return "color:red;";
+					} else if (value == "1") {
+						return "";
+					} else if (value == "2") {
+						return "color:red;";
+					}
+				}},
+				{field:'state1',title:'操作', align:'right',formatter: function(value,row,index){
+					if (row.state == "0") {
+						return '<a href="#" class="easyui-linkbutton">上线</a>';
+					} else if (row.state == "1") {
+						return '<a href="#" class="easyui-linkbutton">下线</a>';
+					} else if (row.state == "2") {
+						return '<a href="#" class="easyui-linkbutton">上线</a>';
+					} 
+				}},
+		    ]]
+		});
+	</script>
+</body>
+</html>
