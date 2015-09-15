@@ -6,5 +6,6 @@
   <packaging>pom</packaging>
   <modules>
   	<module>geewaza-commons</module>
+  	<module>geewaza-web-test</module>
   </modules>
 </project>
