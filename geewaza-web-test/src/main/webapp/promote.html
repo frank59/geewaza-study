@@ -48,7 +48,7 @@
 	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeDlg()">取消</a>
 	    </div>
 	</div>
-	<div id="edit_dlg" class="easyui-dialog" title="编辑推广词" data-options="iconCls:'icon-edit'" style="width:400px;height:200px;padding:10px">
+	<div id="edit_dlg" class="easyui-dialog" title="编辑推广词" data-options="iconCls:'icon-edit',closed:true" style="width:400px;height:200px;padding:10px">
 		The dialog content.
 	</div>
 	
@@ -76,7 +76,6 @@
 	            text: '添加', 
 	            iconCls: 'icon-add', 
 	            handler: function() { 
-	            	alert("!!!");
 	            	openNewDialog(); 
 	            } 
 	        }, '-', { 
