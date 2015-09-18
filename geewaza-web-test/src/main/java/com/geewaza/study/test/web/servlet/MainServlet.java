@@ -1,4 +1,4 @@
-package com.geewaza.study.test.web.easyui.servlet;
+package com.geewaza.study.test.web.servlet;
 
 import java.io.IOException;
 
@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.geewaza.study.test.web.easyui.service.AbstractService;
-import com.geewaza.study.test.web.easyui.util.CommenUtils;
+import com.geewaza.study.commons.WebUtils;
+import com.geewaza.study.test.web.service.AbstractService;
 
 
 /**
@@ -46,7 +46,7 @@ public class MainServlet extends HttpServlet {
 			try {
 				service = (AbstractService) ctx.getBean(serviceName);
 			} catch (Exception e) {
-				response.getWriter().print(CommenUtils.buildErrorMsg("1", "service:" + serviceName + " 不是有效的service", "MainServlet"));
+				response.getWriter().print(WebUtils.buildErrorMsg("1", "service:" + serviceName + " 不是有效的service", "MainServlet"));
 				response.getWriter().flush();
 				logger.error(e.getMessage(), e);
 			}
@@ -54,12 +54,12 @@ public class MainServlet extends HttpServlet {
 				service.doService(request, response);
 			} catch (Exception e) {
 				//执行失败
-				response.getWriter().print(CommenUtils.buildErrorMsg("1", "service:" + serviceName + " 执行异常" , "MainServlet"));
+				response.getWriter().print(WebUtils.buildErrorMsg("1", "service:" + serviceName + " 执行异常" , "MainServlet"));
 				response.getWriter().flush();
 				logger.error(e.getMessage(), e);
 			}
 		} else {
-			response.getWriter().print(CommenUtils.buildErrorMsg("1", "请求没有指定service.", "MainServlet"));
+			response.getWriter().print(WebUtils.buildErrorMsg("1", "请求没有指定service.", "MainServlet"));
 			response.getWriter().flush();
 			logger.info("请求没有指定service.");
 		}

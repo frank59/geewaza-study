@@ -14,9 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.geewaza.study.commons.DataFormat;
+import com.geewaza.study.commons.WebUtils;
 import com.geewaza.study.test.web.easyui.pojo.PromoteWord;
-import com.geewaza.study.test.web.easyui.util.CommenUtils;
 import com.geewaza.study.test.web.easyui.common.State;
+import com.geewaza.study.test.web.service.AbstractService;
 
 @Component("testDataService")
 public class TestDataService extends AbstractService {
@@ -27,7 +28,7 @@ public class TestDataService extends AbstractService {
 			HttpServletResponse response) throws Exception {
 		String fun = request.getParameter("fun");
 		if (StringUtils.isBlank(fun)) {
-			response.getWriter().print(CommenUtils.buildErrorMsg("1", "不是有效的fun", "TestDataService"));
+			response.getWriter().print(WebUtils.buildErrorMsg("1", "不是有效的fun", "TestDataService"));
 			response.getWriter().flush();
 			logger.error("fun = " + fun);
 			return;
@@ -36,7 +37,7 @@ public class TestDataService extends AbstractService {
 		if ("query_promote".equals(fun)) {
 			JSONObject resultJSON = new JSONObject();
 			JSONObject data = queryPromote();
-			resultJSON.put("e", CommenUtils.buildErrorJSON("0", "状态保存成功", "TestDataService"));
+			resultJSON.put("e", WebUtils.buildErrorJSON("0", "状态保存成功", "TestDataService"));
 			resultJSON.put("data", data);
 			response.getWriter().print(data.toString());
 			response.getWriter().flush();

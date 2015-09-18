@@ -1,9 +1,9 @@
-package com.geewaza.study.test.web.easyui.util;
+package com.geewaza.study.commons;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CommenUtils {
+public class WebUtils {
 	
 	public static String buildErrorMsg(String errorCode, String desc, String provider) {
 		  StringBuilder builder = new StringBuilder();

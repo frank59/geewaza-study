@@ -1,4 +1,4 @@
-package com.geewaza.study.test.web.easyui.service;
+package com.geewaza.study.test.web.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
