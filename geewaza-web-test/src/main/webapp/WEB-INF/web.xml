@@ -26,7 +26,7 @@
 	
 	<servlet>
 		<servlet-name>main_servlet</servlet-name>
-		<servlet-class>com.geewaza.study.test.web.easyui.servlet.MainServlet</servlet-class>
+		<servlet-class>com.geewaza.study.test.web.servlet.MainServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>main_servlet</servlet-name>

@@ -89,7 +89,7 @@
 						<configuration>
 							<tasks>
 								<echo message="移动war到/opt/webapp" />
-								<delete file="/opt/webapp/g${package.name}.war"/>
+								<delete file="/opt/webapp/${package.name}.war"/>
 								<copy file="target/${package.name}.war" todir="/opt/webapp/" />
 							</tasks>
 						</configuration>
