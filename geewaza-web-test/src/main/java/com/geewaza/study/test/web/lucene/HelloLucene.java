@@ -12,6 +12,7 @@ import org.apache.lucene.util.Version;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Created by WangHeng on 2016/1/18.
@@ -19,11 +20,11 @@ import java.io.FileReader;
 public class HelloLucene {
 
 	public void index() {
+		IndexWriter writer = null;
 		try {
 //			Directory directory = new RAMDirectory();
 			Directory directory = FSDirectory.open(new File("/opt/lucene/index01"));
 			IndexWriterConfig iwc = new IndexWriterConfig(Version.LUCENE_35, new StandardAnalyzer(Version.LUCENE_35));
-			IndexWriter writer = null;
 			writer = new IndexWriter(directory, iwc);
 
 			Document doc = null;
@@ -38,6 +39,12 @@ public class HelloLucene {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
