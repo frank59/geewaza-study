@@ -8,7 +8,12 @@ import com.geewaza.study.test.web.lucene.HelloLucene;
 public class MainTester {
 
 	public static void main(String[] args) {
-		test01();
+		test02();
+	}
+
+	private static void test02() {
+		HelloLucene hl1 = new HelloLucene();
+		hl1.searcher();
 	}
 
 	private static void test01() {
