@@ -6,6 +6,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,8 +91,10 @@ public class NettyUtils {
 			ByteBuf in = (ByteBuf) msg;
 			try {
 				while (in.isReadable()) { // (1)
-					System.out.print((char) in.readByte());
-					System.out.flush();
+					byte[] req = new byte[in.readableBytes()];
+					in.readBytes(req);
+					String body = new String(req,"UTF-8");
+					System.out.println(body);
 				}
 			} finally {
 				ReferenceCountUtil.release(msg); // (2)
@@ -118,6 +121,56 @@ public class NettyUtils {
 
 	public interface IListenner {
 		public void run(Object param);
+	}
+
+	public static class CommandMessage {
+
+		private String command;
+
+		private String key;
+
+		public String getKey() {
+			return key;
+		}
+
+		public void setKey(String key) {
+			this.key = key;
+		}
+
+		public String getCommand() {
+			return command;
+		}
+
+		public void setCommand(String command) {
+			this.command = command;
+		}
+
+		@Override
+		public String toString() {
+			return "{" +
+					"key=" + key +
+					", command=" + command +
+					"}";
+		}
+	}
+
+	public static class MessageDecoder extends ByteToMessageDecoder {
+
+		@Override
+		protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
+
+		}
+	}
+
+	public static class MessageEncode extends ChannelOutboundHandlerAdapter {
+		@Override
+		public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+			CommandMessage cm = (CommandMessage) msg;
+			String message = cm.getKey() + ":" + cm.getCommand();
+			ByteBuf encoded = ctx.alloc().buffer(4 * message.length());
+			encoded.writeBytes(message.getBytes());
+			ctx.write(encoded, promise);
+		}
 	}
 
 }

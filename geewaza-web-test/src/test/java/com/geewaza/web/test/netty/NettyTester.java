@@ -16,9 +16,9 @@ public class NettyTester {
 	private static void test01() throws InterruptedException {
 		System.out.println("start");
 		NettyUtils.Server server = NettyUtils.startServer(8800);
-		System.out.println("sleep 10s");
-		TimeUnit.SECONDS.sleep(10);
-		server.shutdown();
+//		System.out.println("sleep 10s");
+//		TimeUnit.SECONDS.sleep(10);
+//		server.shutdown();
 		System.out.println("OK");
 
 	}
