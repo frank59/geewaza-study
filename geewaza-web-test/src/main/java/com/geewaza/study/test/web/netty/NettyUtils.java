@@ -72,8 +72,8 @@ public class NettyUtils {
 			f.channel().closeFuture().sync();
 		}
 
-		public void addListenner(String key, IListenner listenner) {
-			serverAdapter.addListenner(key, listenner);
+		public void registerListenner(String key, IListenner listenner) {
+			serverAdapter.registerListenner(key, listenner);
 		}
 
 		public void shutdown() {
@@ -109,7 +109,7 @@ public class NettyUtils {
 			ctx.close();
 		}
 
-		public void addListenner(String key, IListenner listenner) {
+		public void registerListenner(String key, IListenner listenner) {
 			List<IListenner> listennerList = listennerMap.get(key);
 			if (listennerList == null) {
 				listennerList = new ArrayList<IListenner>();
