@@ -1,7 +1,9 @@
 package com.geewaza.web.test.netty;
 
+import com.geewaza.study.test.web.lucene.IndexUtil;
 import com.geewaza.study.test.web.netty.NettyUtils;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -9,8 +11,14 @@ import java.util.concurrent.TimeUnit;
  */
 public class NettyTester {
 
-	public static void main(String[] args) throws InterruptedException {
-		test01();
+	public static void main(String[] args) throws InterruptedException, IOException {
+		test02();
+	}
+
+	private static void test02() throws IOException {
+
+		IndexUtil indexUtil = new IndexUtil();
+		indexUtil.index();
 	}
 
 	private static void test01() throws InterruptedException {
