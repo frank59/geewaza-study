@@ -12,7 +12,13 @@ import java.util.concurrent.TimeUnit;
 public class NettyTester {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		test02();
+		test03();
+	}
+
+	private static void test03() throws IOException {
+
+		IndexUtil indexUtil = new IndexUtil();
+		indexUtil.query();
 	}
 
 	private static void test02() throws IOException {

@@ -4,6 +4,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.NumericField;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
@@ -57,6 +58,15 @@ public class IndexUtil {
 			doc.add(new NumericField("date", Field.Store.YES, true).setLongValue(new Date().getTime()));
 			writer.addDocument(doc);
 		}
+		writer.close();
+	}
+
+	public void query() throws IOException {
+		IndexReader reader = IndexReader.open(directory);
+		System.out.println("numDocs:" + reader.numDocs());
+		System.out.println("maxDocs:" + reader.maxDoc());
+		System.out.println("deleteDocs:" + reader.numDeletedDocs());
+		reader.close();
 	}
 
  }
