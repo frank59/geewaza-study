@@ -26,7 +26,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MyGet {
+public class SpiderUtil {
 	private boolean needProxy;
 	private boolean haveInet;
 
