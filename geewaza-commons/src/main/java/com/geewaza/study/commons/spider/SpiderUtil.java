@@ -93,7 +93,7 @@ public class SpiderUtil {
 		return get(url, needProxy);
 	}
 
-	private byte[] get(String url, boolean needProxy) throws Exception {
+	public byte[] get(String url, boolean needProxy) throws Exception {
 		HttpRes ret = getRes(url, needProxy, null);
 
 		if (ret != null && ret.getDatas() != null && ret.getDatas().length > 0) {
