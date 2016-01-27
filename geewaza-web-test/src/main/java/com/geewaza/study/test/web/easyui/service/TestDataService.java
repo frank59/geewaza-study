@@ -1,16 +1,20 @@
 package com.geewaza.study.test.web.easyui.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.geewaza.study.test.web.easyui.dao.UsersDao;
+import com.geewaza.study.test.web.easyui.pojo.User;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.geewaza.study.commons.DataFormat;
@@ -22,6 +26,12 @@ import com.geewaza.study.test.web.service.AbstractService;
 @Component("testDataService")
 public class TestDataService extends AbstractService {
 	private static Logger logger = LoggerFactory.getLogger(TestDataService.class);
+
+	@Autowired
+	private UsersDao usersDao;
+	public void setUsersDao(UsersDao usersDao) {
+		this.usersDao = usersDao;
+	}
 
 	@Override
 	public void doService(HttpServletRequest request,
@@ -41,8 +51,21 @@ public class TestDataService extends AbstractService {
 			resultJSON.put("data", data);
 			response.getWriter().print(data.toString());
 			response.getWriter().flush();
+		} else if ("get_users".equals(fun)) {
+			List<User> users = usersDao.findAll();
+			JSONArray list = new JSONArray();
+			for (User user : users) {
+				JSONObject userObject = new JSONObject();
+				userObject.put("id", user.getId());
+				userObject.put("firstname", user.getFirstName());
+				userObject.put("lastname", user.getLastName());
+				userObject.put("phone", user.getPhone());
+				userObject.put("email", user.getEmail());
+				list.put(userObject);
+			}
+			response.getWriter().print(list.toString());
+			response.getWriter().flush();
 		}
-
 	}
 
 	/**
