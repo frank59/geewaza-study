@@ -65,6 +65,16 @@ public class TestDataService extends AbstractService {
 			}
 			response.getWriter().print(list.toString());
 			response.getWriter().flush();
+		} else if ("save_user".equals(fun)) {
+			String idStr = request.getParameter("id");
+			if (StringUtils.isNotBlank(idStr)) {
+				//更新操作
+			} else {
+				//新增
+			}
+
+		} else if ("destroy_user".equals(fun)) {
+			String idStr = request.getParameter("id");
 		}
 	}
 
