@@ -5,7 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-  	<module>geewaza-commons</module>
-  	<module>geewaza-web-test</module>
+    <module>geewaza-commons</module>
+    <module>geewaza-web-test</module>
   </modules>
 </project>
