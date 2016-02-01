@@ -18,7 +18,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class MainTester {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		test01();
 	}
 
