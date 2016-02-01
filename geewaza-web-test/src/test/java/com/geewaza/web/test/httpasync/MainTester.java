@@ -15,6 +15,8 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by WangHeng on 2016/2/1.
+ * 部署这个工程，使用web容器将该工程以web服务的方式启动，监听8080端口
+ * 再执行该测试程序
  */
 public class MainTester {
 
