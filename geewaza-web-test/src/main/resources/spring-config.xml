@@ -13,6 +13,10 @@
 
 	<context:component-scan base-package="com.geewaza.study.test.web" />
 	<import resource="data-sources.xml" />
+	<!--
+
+
 	<import resource="spider-config.xml" />
+	 -->
 
 </beans>
