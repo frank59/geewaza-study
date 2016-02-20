@@ -16,7 +16,8 @@ public class AnalyzerDemo {
 
 	private static final String[] examples = {
 			"The quick brown fox jumped over the lazy dog",
-			"XT&Z Corporation - xyz@example.com"
+			"XT&Z Corporation - xyz@example.com",
+			"No Fluff, Just Stuff"
 	};
 
 	private static final Analyzer[] analyzers = new Analyzer[]{
