@@ -13,7 +13,7 @@ import java.io.StringReader;
 public class AnalyzerUtils {
 
 	public static void displayTokens(Analyzer analyzer, String text) throws IOException {
-		displayTokens(analyzer.tokenStream("contents,", new StringReader(text)));
+		displayTokens(analyzer.tokenStream("随便指定", new StringReader(text)));
 	}
 
 	public static void displayTokens(TokenStream tokenStream) throws IOException {
