@@ -18,7 +18,7 @@ public class TestAnalyzer {
 	private static void test04() throws IOException {
 		Analyzer a1 = new MyStopAnalyzer(new String[]{"I", "you", "hate"});
 		Analyzer a2 = new MyStopAnalyzer();
-		String text = "how are you thank you I hate you";
+		String text = "how are you thank you I hate you all";
 		AnalyzerUtils.displayTokens(a1, text);
 		AnalyzerUtils.displayTokens(a2, text);
 	}
