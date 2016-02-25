@@ -203,6 +203,17 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.191</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.chenlb.mmseg4j</groupId>
+			<artifactId>mmseg4j-all</artifactId>
+			<version>1.8.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.chenlb.mmseg4j</groupId>
+			<artifactId>mmseg4j-core</artifactId>
+			<version>1.10.0</version>
+		</dependency>
 	</dependencies>
 
 </project>

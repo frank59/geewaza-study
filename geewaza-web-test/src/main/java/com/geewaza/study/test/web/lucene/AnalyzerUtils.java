@@ -21,5 +21,6 @@ public class AnalyzerUtils {
 		while (tokenStream.incrementToken()) {
 			System.out.print("[" + term.term() + "]");
 		}
+		System.out.println();
 	}
 }
