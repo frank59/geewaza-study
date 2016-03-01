@@ -19,6 +19,8 @@ public class LOLChampionSpider extends AbstractSpider {
 	private static final String SRC_DATA_URL = "http://lol.qq.com/biz/hero/champion.js";
 	private static final String HERO_VIDEO_URL = "http://lol.qq.com/web201310/js/herovideo.js";
 	private static final String IMG_PRIFIX = "http://ossweb-img.qq.com/images/lol/img/champion/";
+	private static final String SKIN_PRIFIX = "http://ossweb-img.qq.com/images/lol/web201310/skin/big";
+	private static final String CHAMPION_JS_PRIFIX = "http://lol.qq.com/biz/hero/";
 
 	public List<LOLChampion> pullOfficialChampionData() throws Exception {
 		List<LOLChampion> result = new ArrayList<LOLChampion>();
@@ -52,13 +54,19 @@ public class LOLChampionSpider extends AbstractSpider {
 			}
 			JSONObject imageJSON = championData.getJSONObject("image");
 			String image = IMG_PRIFIX + imageJSON.getString("full");
-
+			JSONObject chiampionJSJSON = getJSJsonData(CHAMPION_JS_PRIFIX + championId + ".js", "LOLherojs.champion.Varus=");
+			JSONArray chiampionDataArray = chiampionJSJSON.optJSONArray("data");
+			JSONObject chiampionDataItem = chiampionDataArray.getJSONObject(0);
+			JSONArray skins = chiampionDataItem.optJSONArray("skins");
+			JSONObject skinItem = skins.getJSONObject(0);
+			String defaltSkinId = skinItem.getString("id");
 			lolChampion.setId(championId);
 			lolChampion.setKey((String)championKey);
 			lolChampion.setName(championName);
 			lolChampion.setTitle(championTitle);
 			lolChampion.setVideo(championVideo);
 			lolChampion.setImage(image);
+			lolChampion.setSkin(SKIN_PRIFIX + defaltSkinId + ".jpg");
 			result.add(lolChampion);
 		}
 		return result;
@@ -108,6 +116,7 @@ public class LOLChampionSpider extends AbstractSpider {
 		private List<String> tags;
 		private String video;
 		private String image;
+		private String skin;
 
 		public String getId() {
 			return id;
@@ -165,6 +174,14 @@ public class LOLChampionSpider extends AbstractSpider {
 			this.image = image;
 		}
 
+		public String getSkin() {
+			return skin;
+		}
+
+		public void setSkin(String skin) {
+			this.skin = skin;
+		}
+
 		@Override
 		public String toString() {
 			return "{" +
@@ -175,6 +192,7 @@ public class LOLChampionSpider extends AbstractSpider {
 					", tags=" + tags +
 					", video=" + video +
 					", image=" + image +
+					", skin=" + skin +
 					"}";
 		}
 
