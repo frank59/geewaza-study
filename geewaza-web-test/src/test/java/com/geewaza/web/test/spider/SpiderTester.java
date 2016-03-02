@@ -1,5 +1,6 @@
 package com.geewaza.web.test.spider;
 
+import com.geewaza.study.commons.spider.SpiderUtil;
 import com.geewaza.study.test.web.spider.LOLChampionSpider;
 import org.apache.commons.io.FileUtils;
 import org.springframework.context.ApplicationContext;
@@ -18,6 +19,16 @@ public class SpiderTester {
 
 	public static void main(String[] args) throws Exception {
 		test01();
+	}
+
+	private static void test02() throws Exception {
+		ApplicationContext context = new FileSystemXmlApplicationContext(SPRING_FILE);
+		String jsFile = "http://lol.qq.com/biz/hero/XinZhao.js";
+		SpiderUtil spiderUtil = context.getBean("spiderUtil", SpiderUtil.class);
+		SpiderUtil.HttpRes httpRes = spiderUtil.getRes(jsFile, false);
+		String responseBody = httpRes.getSource();
+		System.out.println(responseBody);
+
 	}
 
 	private static void test01() throws Exception {

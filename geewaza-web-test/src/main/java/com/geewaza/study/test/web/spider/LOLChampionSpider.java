@@ -24,8 +24,8 @@ public class LOLChampionSpider extends AbstractSpider {
 
 	public List<LOLChampion> pullOfficialChampionData() throws Exception {
 		List<LOLChampion> result = new ArrayList<LOLChampion>();
-		JSONObject championInfoJSON = getJSJsonData(SRC_DATA_URL, "LOLherojs.champion=");
-		JSONObject championExtInfoJSON = getJSJsonData(HERO_VIDEO_URL, "LOLherojs.otherthings = ");
+		JSONObject championInfoJSON = getJSJsonData(SRC_DATA_URL, "champion");
+		JSONObject championExtInfoJSON = getJSJsonData(HERO_VIDEO_URL, "otherthings");
 		JSONObject championKeys = championInfoJSON.getJSONObject("keys");
 		JSONObject championDataJSON = championInfoJSON.getJSONObject("data");
 		JSONObject championExtJSON = championExtInfoJSON.getJSONObject("data");
@@ -54,37 +54,47 @@ public class LOLChampionSpider extends AbstractSpider {
 			}
 			JSONObject imageJSON = championData.getJSONObject("image");
 			String image = IMG_PRIFIX + imageJSON.getString("full");
-			JSONObject chiampionJSJSON = getJSJsonData(CHAMPION_JS_PRIFIX + championId + ".js", "LOLherojs.champion.Varus=");
-			JSONArray chiampionDataArray = chiampionJSJSON.optJSONArray("data");
-			JSONObject chiampionDataItem = chiampionDataArray.getJSONObject(0);
-			JSONArray skins = chiampionDataItem.optJSONArray("skins");
+
+			JSONObject chiampionJSJSON = getJSJsonData(CHAMPION_JS_PRIFIX + championId + ".js", "LOLherojs.champion."+ championId);
+			System.out.println(chiampionJSJSON);
+			JSONObject chiampionData = chiampionJSJSON.optJSONObject("data");
+			JSONArray skins = chiampionData.optJSONArray("skins");
 			JSONObject skinItem = skins.getJSONObject(0);
 			String defaltSkinId = skinItem.getString("id");
+
 			lolChampion.setId(championId);
 			lolChampion.setKey((String)championKey);
 			lolChampion.setName(championName);
 			lolChampion.setTitle(championTitle);
 			lolChampion.setVideo(championVideo);
 			lolChampion.setImage(image);
+
 			lolChampion.setSkin(SKIN_PRIFIX + defaltSkinId + ".jpg");
+
 			result.add(lolChampion);
 		}
 		return result;
 	}
 
 	private JSONObject getJSJsonData(String url, String paramPrefix) throws Exception {
+		System.out.println(paramPrefix + "---" + url);
 		SpiderUtil.HttpRes httpRes = spiderUtil.getRes(url, false);
 		String responseBody = httpRes.getSource();
 		if (StringUtils.isBlank(responseBody)) {
 			return null;
 		}
-		String[] responseDataArray = responseBody.split(";");
+		String[] responseDataArray = responseBody.split("};");
 		for (String item : responseDataArray) {
+			item += "}";
+			System.out.println(item);
+			System.out.println(item.contains(paramPrefix));
 			if (item.contains(paramPrefix)) {
-				String jsonData = item.replace(paramPrefix, "");
-				JSONObject responseDataJSON = new JSONObject(jsonData);
+				String jsonStr = item.substring(item.indexOf("=") + 1);
+				System.out.println(jsonStr);
+				JSONObject responseDataJSON = new JSONObject(jsonStr);
 				return responseDataJSON;
 			}
+			System.out.println("-----------");
 		}
 		return null;
 	}
