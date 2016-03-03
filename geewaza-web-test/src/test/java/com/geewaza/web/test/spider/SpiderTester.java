@@ -7,6 +7,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,22 @@ public class SpiderTester {
 	private static final String SPRING_FILE = "classpath:spring-config.xml";
 
 	public static void main(String[] args) throws Exception {
-		test01();
+		test03();
+	}
+
+	private static void test03() throws Exception {
+		String filePrefix = "/tmp/champion/";
+		ApplicationContext context = new FileSystemXmlApplicationContext(SPRING_FILE);
+		LOLChampionSpider lolChampionSpider = context.getBean("lolChampionSpider", LOLChampionSpider.class);
+		List<LOLChampionSpider.LOLChampion> lolChampions = lolChampionSpider.pullOfficialChampionData();
+		SpiderUtil spiderUtil = context.getBean("spiderUtil", SpiderUtil.class);
+		for (LOLChampionSpider.LOLChampion lolChampion : lolChampions) {
+			String fileName = lolChampion.getImage().substring(lolChampion.getImage().lastIndexOf("/") + 1, lolChampion.getImage().length());
+			File outPutFile = new File(filePrefix + fileName);
+			URL fileUrl = new URL(lolChampion.getImage());
+			FileUtils.copyURLToFile(fileUrl, outPutFile);
+		}
+		System.exit(0);
 	}
 
 	private static void test02() throws Exception {

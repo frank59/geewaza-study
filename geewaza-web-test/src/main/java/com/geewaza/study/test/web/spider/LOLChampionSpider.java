@@ -56,7 +56,6 @@ public class LOLChampionSpider extends AbstractSpider {
 			String image = IMG_PRIFIX + imageJSON.getString("full");
 
 			JSONObject chiampionJSJSON = getJSJsonData(CHAMPION_JS_PRIFIX + championId + ".js", "LOLherojs.champion."+ championId);
-			System.out.println(chiampionJSJSON);
 			JSONObject chiampionData = chiampionJSJSON.optJSONObject("data");
 			JSONArray skins = chiampionData.optJSONArray("skins");
 			JSONObject skinItem = skins.getJSONObject(0);
@@ -77,7 +76,6 @@ public class LOLChampionSpider extends AbstractSpider {
 	}
 
 	private JSONObject getJSJsonData(String url, String paramPrefix) throws Exception {
-		System.out.println(paramPrefix + "---" + url);
 		SpiderUtil.HttpRes httpRes = spiderUtil.getRes(url, false);
 		String responseBody = httpRes.getSource();
 		if (StringUtils.isBlank(responseBody)) {
@@ -86,15 +84,11 @@ public class LOLChampionSpider extends AbstractSpider {
 		String[] responseDataArray = responseBody.split("};");
 		for (String item : responseDataArray) {
 			item += "}";
-			System.out.println(item);
-			System.out.println(item.contains(paramPrefix));
 			if (item.contains(paramPrefix)) {
 				String jsonStr = item.substring(item.indexOf("=") + 1);
-				System.out.println(jsonStr);
 				JSONObject responseDataJSON = new JSONObject(jsonStr);
 				return responseDataJSON;
 			}
-			System.out.println("-----------");
 		}
 		return null;
 	}
