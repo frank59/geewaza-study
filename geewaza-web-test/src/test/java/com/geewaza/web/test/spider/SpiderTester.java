@@ -21,7 +21,22 @@ public class SpiderTester {
 	private static final String SPRING_FILE = "classpath:spring-config.xml";
 
 	public static void main(String[] args) throws Exception {
-		test03();
+		test04();
+	}
+
+	private static void test04() throws Exception {
+		String filePrefix = "/tmp/skin/";
+		ApplicationContext context = new FileSystemXmlApplicationContext(SPRING_FILE);
+		LOLChampionSpider lolChampionSpider = context.getBean("lolChampionSpider", LOLChampionSpider.class);
+		List<LOLChampionSpider.LOLChampion> lolChampions = lolChampionSpider.pullOfficialChampionData();
+		for (LOLChampionSpider.LOLChampion lolChampion : lolChampions) {
+			String championId = lolChampion.getId();
+			String fileName = championId + lolChampion.getSkin().substring(lolChampion.getSkin().lastIndexOf("."), lolChampion.getSkin().length());
+			File outPutFile = new File(filePrefix + fileName);
+			URL fileUrl = new URL(lolChampion.getSkin());
+			FileUtils.copyURLToFile(fileUrl, outPutFile);
+		}
+		System.exit(0);
 	}
 
 	private static void test03() throws Exception {
@@ -29,7 +44,6 @@ public class SpiderTester {
 		ApplicationContext context = new FileSystemXmlApplicationContext(SPRING_FILE);
 		LOLChampionSpider lolChampionSpider = context.getBean("lolChampionSpider", LOLChampionSpider.class);
 		List<LOLChampionSpider.LOLChampion> lolChampions = lolChampionSpider.pullOfficialChampionData();
-		SpiderUtil spiderUtil = context.getBean("spiderUtil", SpiderUtil.class);
 		for (LOLChampionSpider.LOLChampion lolChampion : lolChampions) {
 			String fileName = lolChampion.getImage().substring(lolChampion.getImage().lastIndexOf("/") + 1, lolChampion.getImage().length());
 			File outPutFile = new File(filePrefix + fileName);
