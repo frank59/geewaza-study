@@ -17,7 +17,7 @@ public class ImgTools {
 	public static void resizeImg(String inputFile, String outputFile, int width, int height, String format) throws IOException {
 		FileInputStream inputStream = new FileInputStream(new File(inputFile));
 		BufferedImage inputImage = ImageIO.read(inputStream);
-		BufferedImage outputImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage outputImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		FileOutputStream outputStream = new FileOutputStream(new File(outputFile));
 		try {
 			Graphics graphics = outputImage.createGraphics();
