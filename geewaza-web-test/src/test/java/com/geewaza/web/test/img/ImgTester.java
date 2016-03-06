@@ -95,7 +95,7 @@ public class ImgTester {
 			backBuffer = g.getDeviceConfiguration().createCompatibleImage(srcImg.getWidth(null), srcImg.getHeight(null), Transparency.TRANSLUCENT);
 			g.dispose();
 			g = backBuffer.createGraphics();
-			Image backImg = srcImg.getScaledInstance(srcImg.getWidth(null), srcImg.getHeight(null), iconBuffer.SCALE_AREA_AVERAGING);
+			Image backImg = srcImg.getScaledInstance(srcImg.getWidth(null), srcImg.getHeight(null), backBuffer.SCALE_AREA_AVERAGING);
 			g.drawImage(backImg, 0, 0, null);
 			g.drawImage(iconImg, 0, srcImg.getHeight(null) - iconHeight, null);
 			g.dispose();
