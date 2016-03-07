@@ -6,10 +6,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.awt.image.RenderedImage;
+import java.io.*;
 
 /**
  * Created by WangHeng on 2016/3/4.
@@ -17,7 +15,37 @@ import java.io.OutputStream;
 public class ImgTester {
 
 	public static void main(String[] args) throws IOException {
-		test01();
+		test07();
+	}
+
+	private static void test07() throws IOException {
+
+		String fromFile = "D:\\tmp\\img\\img.png";
+		String toFile = "D:\\tmp\\img\\img.jpg";
+		RenderedImage img = ImageIO.read(new File(fromFile));
+		ImageIO.write(img, "jpg", new File(toFile));
+	}
+
+	private static void test06() throws IOException {
+		String bgPic = "D:\\tmp\\img\\back.png";
+		String iconPath = "D:\\tmp\\img\\miss_mini.png";
+		String targerPath = "D:\\tmp\\img\\img.png";
+
+		BufferedImage backBuffer = ImageIO.read(new File(bgPic));
+		BufferedImage iconBuffer = ImageIO.read(new File(iconPath));
+		BufferedImage targetBuffer = new BufferedImage(backBuffer.getWidth(), backBuffer.getHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = targetBuffer.createGraphics();
+		g2d.drawImage(backBuffer, 0, 0, null);
+		g2d.drawImage(iconBuffer, 0, backBuffer.getHeight() - iconBuffer.getHeight(), null);
+		System.out.println(ImageIO.write(targetBuffer, "PNG", new FileOutputStream(targerPath)));
+	}
+
+	private static void test05() throws IOException {
+
+		String bgPic = "D:\\tmp\\img\\back.jpg";
+		String targerPath = "D:\\tmp\\img\\back.png";
+		String format = "png";
+		System.out.println(imageTransfer(bgPic, targerPath, format));
 	}
 
 	private static void test04() throws IOException {
@@ -38,7 +66,7 @@ public class ImgTester {
 			g.dispose();
 			os = new FileOutputStream(targerPath);
 			// 生成图片
-			ImageIO.write(backBuffer, "JPG", os);
+			ImageIO.write(backBuffer, "png", os);
 		} finally {
 			os.close();
 		}
@@ -49,7 +77,7 @@ public class ImgTester {
 		String toFile = "D:\\tmp\\img\\miss_mini.png";
 		int width = 150;
 		int height = 200;
-		resizePNG(fromFile, toFile, width, height, false);
+		resizePNG(fromFile, toFile, width, height);
 
 	}
 
@@ -109,25 +137,14 @@ public class ImgTester {
 
 	}
 
-	public static void resizePNG(String fromFile, String toFile, int outputWidth, int outputHeight,boolean proportion) {
+	public static void resizePNG(String fromFile, String toFile, int outputWidth, int outputHeight) {
 		try {
 			File f2 = new File(fromFile);
 			BufferedImage bi2 = ImageIO.read(f2);
 			int newWidth;
 			int newHeight;
-			// 判断是否是等比缩放
-			if (proportion == true) {
-				// 为等比缩放计算输出的图片宽度及高度
-				double rate1 = ((double) bi2.getWidth(null)) / (double) outputWidth + 0.1;
-				double rate2 = ((double) bi2.getHeight(null)) / (double) outputHeight + 0.1;
-				// 根据缩放比率大的进行缩放控制
-				double rate = rate1 < rate2 ? rate1 : rate2;
-				newWidth = (int) (((double) bi2.getWidth(null)) / rate);
-				newHeight = (int) (((double) bi2.getHeight(null)) / rate);
-			} else {
-				newWidth = outputWidth; // 输出的图片宽度
-				newHeight = outputHeight; // 输出的图片高度
-			}
+			newWidth = outputWidth; // 输出的图片宽度
+			newHeight = outputHeight; // 输出的图片高度
 
 			BufferedImage to = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2d = to.createGraphics();
@@ -141,6 +158,19 @@ public class ImgTester {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static boolean imageTransfer(String fromFile, String toFile, String format) throws IOException {
+		boolean flag = false;
+		BufferedImage src = ImageIO.read(new File(fromFile));
+
+		Image image = src.getScaledInstance(src.getWidth(), src.getHeight(), Image.SCALE_DEFAULT);
+		BufferedImage dest = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics g = dest.getGraphics();
+		g.drawImage(image, 0, 0, null);
+		g.dispose();
+		flag = ImageIO.write(dest, format, new FileOutputStream(toFile));
+		return flag;
 	}
 
 
