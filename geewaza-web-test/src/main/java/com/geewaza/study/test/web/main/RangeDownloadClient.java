@@ -47,7 +47,7 @@ public class RangeDownloadClient {
     }
 
     public static void test01() throws IOException {
-        String url = "localhost:8080/geewaza/rangeDownloadService.do";
+        String url = "http://localhost:8080/geewaza/rangeDownLoadService.do";
         File file = new File(DOWNLOAD_FILE);
 
         if (file.exists()) {
