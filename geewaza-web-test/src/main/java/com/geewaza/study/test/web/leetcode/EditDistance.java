@@ -39,6 +39,5 @@ public class EditDistance {
             }
         }
         return c[x.length()][y.length()];
-
     }
 }
