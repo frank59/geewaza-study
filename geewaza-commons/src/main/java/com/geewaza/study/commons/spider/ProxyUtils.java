@@ -3,7 +3,7 @@ package com.geewaza.study.commons.spider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -20,30 +20,75 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ProxyUtils {
 	public static final Log logger = LogFactory.getLog(ProxyUtils.class);
-	
-	//ip池
-	private static String[] ipPool = new String[] {
-			"115.231.179.145", "118.228.16.130", "182.131.6.11" };
-	
-	private static String[] ips = ipPool;
+
+	private static String config_file = "proxy.hosts";
+	private static List<Host> hosts;
 	private static Random random = new Random();
 	private static final Lock lock = new ReentrantLock(false);
+	private static ProxyCheckThread checkThread = new ProxyCheckThread(hosts);
+	private static ScheduledExecutorService pool;
 	
 	static{
-		startCheckIps(ipPool);
+		logger.info("初始化代理配置");
+		try {
+			InputStream input = ProxyUtils.class.getClassLoader().getResourceAsStream(config_file);
+			try {
+				init(input);
+			} finally {
+				input.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//启动验证代理可用的线程
+		startCheckIps();
+	}
+
+	private static void startCheckIps(){
+		logger.info("启动代理服务器监控线程");
+		pool = Executors.newSingleThreadScheduledExecutor(new MyThreadFactory("checkip"));
+		pool.scheduleWithFixedDelay(checkThread, 0, 10, TimeUnit.MINUTES);
+	}
+
+	public static void init(File configFile) {
+		try {
+			FileInputStream input = new FileInputStream(configFile);
+			try {
+				init(input);
+			} finally {
+				input.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void init(InputStream input) throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+		hosts = new ArrayList<Host>();
+		String line = null;
+		while ((line = reader.readLine()) != null) {
+			String[] hostInfo = line.trim().split(":");
+			if (hostInfo.length == 2) {
+				try {
+					hosts.add(new Host(hostInfo[0], Integer.parseInt(hostInfo[1])));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		checkThread.setHosts(hosts);
 	}
 	
-	public static void startCheckIps(String[] ips){
-		ScheduledExecutorService pool = Executors.newSingleThreadScheduledExecutor(new MyThreadFactory("checkip"));
-		pool.scheduleWithFixedDelay(new ProxyCheckThread(ips), 0, 10, TimeUnit.MINUTES);
-	}
-	
-	public static String getProxyIp(){	
+
+	public static Host getProxyHost(){
 		final Lock mainLock = lock;
     	try {
     		mainLock.lock();
-			
-    		return ips[random.nextInt(ips.length)];
+		    if (hosts == null || hosts.size() == 0) {
+			    return null;
+		    }
+		    return hosts.get(random.nextInt(hosts.size()));
     	} finally{
 			mainLock.unlock();
 		}
@@ -51,28 +96,34 @@ public class ProxyUtils {
 	
 	/**校验IP是否可以ping通*/
 	public static class ProxyCheckThread implements Runnable {
-		private String[] poolIps;
+		private List<Host> hosts;
 		private final Runtime runtime;
-		
-		public ProxyCheckThread(String[] ips) {
+
+		public ProxyCheckThread(List<Host> hosts) {
 			super();
-			
-			this.poolIps = ips;
+			this.hosts = hosts;
 			this.runtime = Runtime.getRuntime();
+		}
+
+		public void setHosts(List<Host> hosts) {
+			this.hosts = hosts;
 		}
 
 		@Override
 		public void run() {
-			List<String> list = new ArrayList<String>();
-			List<String> badlist = new ArrayList<String>();
+			if (hosts == null || hosts.size() == 0) {
+				return;
+			}
+			List<Host> list = new ArrayList<Host>();
+			List<Host> badlist = new ArrayList<Host>();
 			
-			for (String ip : poolIps) {
+			for (Host host : hosts) {
 				Socket connect = new Socket();
 				boolean status = false;
 
 				try {
 					try {
-						connect.connect(new InetSocketAddress(ip, 8181), 500);
+						connect.connect(new InetSocketAddress(host.getIp(), host.getPort()), 500);
 						status = connect.isConnected();
 					} catch (UnknownHostException e) {
 						status = false;
@@ -82,9 +133,9 @@ public class ProxyUtils {
 	
 					if (status){
 						//TODO:可以随机等待一个时间(50-100毫秒)再check一次
-						list.add(ip);
+						list.add(host);
 					}else {
-						badlist.add(ip);
+						badlist.add(host);
 					}
 				} catch (Exception e){
 					runtime.exit(1);
@@ -94,13 +145,14 @@ public class ProxyUtils {
 								
 			//如果通的ip存在4个以上，才复写IPS
 			if(list.size() >= 4){
-				String[] array = new String[list.size()];
-				ProxyUtils.ips = list.toArray(array);
+				List<Host> okHosts = new ArrayList<Host>(list);
+				ProxyUtils.hosts = okHosts;
 			}
 			
 			//存储不能ping通的ip
 			if(badlist.size() >= 1){
-				String[] array = new String[badlist.size()];
+				//// TODO: 2016/4/13 记录失效的代理
+//				List<InetSocketAddress> badHosts = new ArrayList<InetSocketAddress>(badlist);
 			}
 			
 			Thread.yield();
@@ -128,6 +180,40 @@ public class ProxyUtils {
 			if (t.getPriority() != Thread.NORM_PRIORITY - 3)
 				t.setPriority(Thread.NORM_PRIORITY - 3);
 			return t;
+		}
+	}
+
+	public static class Host {
+		private String ip;
+		private int port;
+
+		public String getIp() {
+			return ip;
+		}
+
+		public void setIp(String ip) {
+			this.ip = ip;
+		}
+
+		public int getPort() {
+			return port;
+		}
+
+		public void setPort(int port) {
+			this.port = port;
+		}
+
+		public Host(String ip, int port) {
+			this.ip = ip;
+			this.port = port;
+		}
+
+		@Override
+		public String toString() {
+			return "{" +
+					"ip=" + ip +
+					", port=" + port +
+					"}";
 		}
 	}
 }
