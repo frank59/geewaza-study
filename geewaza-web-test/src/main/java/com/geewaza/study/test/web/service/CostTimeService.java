@@ -30,6 +30,7 @@ public class CostTimeService extends AbstractService {
 			TimeUnit.MILLISECONDS.sleep(sleepTime);
 			JSONObject responseObject = new JSONObject();
 			responseObject.put("cost", sleepTime);
+			responseObject.put("data",key);
 			out.write(responseObject.toString());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
