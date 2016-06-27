@@ -7,5 +7,6 @@
   <modules>
     <module>geewaza-commons</module>
     <module>geewaza-web-test</module>
+    <module>geewaza-mybatis-test</module>
   </modules>
 </project>
