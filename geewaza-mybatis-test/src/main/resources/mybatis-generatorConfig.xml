@@ -4,9 +4,10 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
+    <properties resource="mybatis.properties"></properties>
     <!-- classPathEntry:数据库的JDBC驱动的jar包地址-->
-    <classPathEntry location="mybatis/mysql-connector-java-5.1.18.jar"/>
-    <context id="db2tables" targetRuntime="MyBatis3">
+    <classPathEntry location="${classpath}"/>
+    <context id="MyBatis" targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="false"/>
             <!--是否去除自动生成的注释 true：是 false:否 -->
@@ -14,14 +15,14 @@
         </commentGenerator>
 
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/test"
-                        userId="root"
-                        password="123456"/>
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}"/>
 
 
         <!-- targetProject:自动生成代码的位置 -->
-        <javaModelGenerator targetPackage="com.geewaza.study.mybatis.generator.model"
+        <javaModelGenerator targetPackage="${java.direct.package}.model"
                             targetProject="./src/main/java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="true"/>
@@ -29,17 +30,22 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.geewaza.study.mybatis.generator.mapper"
+        <sqlMapGenerator targetPackage="${java.direct.package}.mapper"
                          targetProject="./src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator targetPackage="com.geewaza.study.mybatis.generator.mapper"
+        <javaClientGenerator targetPackage="${java.direct.package}.mapper"
                              targetProject="./src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="Users" domainObjectName="User">
+        <table tableName="Users" domainObjectName="User"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false" >
         </table>
     </context>
 </generatorConfiguration>
