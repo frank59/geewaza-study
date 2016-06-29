@@ -4,6 +4,8 @@ import com.geewaza.study.mybatis.model.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Created by wangh on 2016/6/28.
@@ -11,7 +13,13 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 public class MyBatisTestMain {
 
 	public static void main(String[] args) {
-		test01();
+		test02();
+	}
+
+	private static void test02() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring.xml");
+
+
 	}
 
 	private static void test01() {

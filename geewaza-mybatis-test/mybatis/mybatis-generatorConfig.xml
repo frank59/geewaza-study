@@ -29,8 +29,8 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.geewaza.study.mybatis.generator.dao"
-                         targetProject="./src/main/java">
+        <sqlMapGenerator targetPackage="com.geewaza.study.mybatis.generator.mapper"
+                         targetProject="./src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
