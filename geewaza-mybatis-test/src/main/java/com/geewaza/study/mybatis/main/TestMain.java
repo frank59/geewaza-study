@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath*:spring.xml")
+@ContextConfiguration(locations = "classpath:spring.xml")
 public class TestMain {
 
     @Resource
