@@ -234,9 +234,8 @@ public class SpiderUtil {
 
 	/** 设置请求代理IP、端口 */
 	private void setRequestProxy(Builder builder) {
-		String ip = ProxyUtils.getProxyIp();
-		int port = 8181;
-		HttpHost proxy = new HttpHost(ip, port);
+		ProxyUtils.Host host = ProxyUtils.getProxyHost();
+		HttpHost proxy = new HttpHost(host.getIp(), host.getPort());
 		builder.setProxy(proxy);
 	}
 
