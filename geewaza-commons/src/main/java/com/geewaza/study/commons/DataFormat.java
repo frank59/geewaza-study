@@ -4,6 +4,7 @@
 package com.geewaza.study.commons;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -438,6 +439,42 @@ public class DataFormat {
 	public static String formatLocalNumber(long number) {
 		return new DecimalFormat("#,###,###").format(number);
 		
+	}
+
+	/**
+	 * 返回一个控制台能显示的进度条
+	 * @param start
+	 * @param current
+	 * @param end
+     * @return
+     */
+	public static String progressPrint(long start, long current, long end) {
+		long x = current - start;
+		long y = end - start;
+		return progressPrint((double) x/(double) y);
+	}
+
+	public static String progressPrint(double percent) {
+		StringBuilder resultBuilder = new StringBuilder();
+
+		if (percent < 0.0 && percent > 1.0) {
+			return "-%:[--------ERROR-------]";
+		}
+		NumberFormat nt = NumberFormat.getPercentInstance();
+		// 设置百分数精确度2即保留两位小数
+		nt.setMinimumFractionDigits(0);
+		resultBuilder.append(nt.format(percent));
+		resultBuilder.append(":[");
+		int in = (int) (percent * 20);
+		for (int i =0 ; i < 20; i++) {
+			if (in >= (i+1)) {
+				resultBuilder.append("#");
+			} else {
+				resultBuilder.append("-");
+			}
+		}
+		resultBuilder.append("]");
+		return resultBuilder.toString();
 	}
 	
 	public static void main(String[] args) {
