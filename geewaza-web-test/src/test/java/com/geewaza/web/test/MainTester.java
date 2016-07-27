@@ -1,6 +1,6 @@
 package com.geewaza.web.test;
 
-import com.geewaza.study.commons.Request;
+import com.geewaza.study.commons.util.Request;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -18,7 +18,6 @@ import java.nio.CharBuffer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

@@ -1,4 +1,4 @@
-package com.geewaza.study.commons;
+package com.geewaza.study.commons.util;
 
 import org.json.JSONException;
 import org.json.JSONObject;

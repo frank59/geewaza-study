@@ -1,4 +1,4 @@
-package com.geewaza.study.commons;
+package com.geewaza.study.commons.util;
 
 import java.util.concurrent.TimeUnit;
 

@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.geewaza.study.commons.DataFormat;
-import com.geewaza.study.commons.WebUtils;
+import com.geewaza.study.commons.util.DataFormat;
+import com.geewaza.study.commons.util.WebUtils;
 import com.geewaza.study.test.web.easyui.pojo.PromoteWord;
 import com.geewaza.study.test.web.easyui.common.State;
 import com.geewaza.study.test.web.service.AbstractService;

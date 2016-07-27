@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.geewaza.study.commons;
+package com.geewaza.study.commons.util;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
