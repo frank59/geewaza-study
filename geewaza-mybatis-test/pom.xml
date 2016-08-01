@@ -65,20 +65,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.0.2</version>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <directory>${basedir}/src/main/webapp/WEB-INF</directory>
-                            <filtering>true</filtering>
-                            <targetPath>WEB-INF</targetPath>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-            <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
@@ -89,9 +75,9 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <echo message="移动war到/opt/webapp" />
-                                <delete file="/opt/webapp/${project.artifactId}.war"/>
-                                <copy file="target/${project.artifactId}.war" todir="/opt/webapp/" />
+                                <echo message="移动工程目录到/opt/webapp/${project.build.finalName}"/>
+                                <delete dir="/opt/webapp/${project.build.finalName}"/>
+                                <copydir src="target/${project.build.finalName}/" dest="/opt/webapp/${project.build.finalName}"/>
                             </tasks>
                         </configuration>
                     </execution>
