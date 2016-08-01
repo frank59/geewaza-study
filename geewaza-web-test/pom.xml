@@ -34,6 +34,12 @@
 				<config.file.dir>dev</config.file.dir>
 			</properties>
 		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<config.file.dir>test</config.file.dir>
+			</properties>
+		</profile>
 	</profiles>
 	
 	
@@ -43,13 +49,9 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
-				<excludes>
-					<exclude>online/*.*</exclude>
-					<exclude>dev/*.*</exclude>
-				</excludes>
 			</resource>
 			<resource>
-				<directory>src/main/resources/${config.file.dir}</directory>
+				<directory>src/main/resources.${config.file.dir}</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>
