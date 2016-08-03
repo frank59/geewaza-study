@@ -14,7 +14,7 @@ public class AppServer {
      * @param address server的地址
      */
     public void connectZookeeper(String address) throws Exception {
-        ZooKeeper zk = new ZooKeeper("localhost:4180,localhost:4181,localhost:4182", 5000, new Watcher() {
+        ZooKeeper zk = new ZooKeeper("test.geewaza.com:2181,test.geewaza.com:2182,test.geewaza.com:2183", 5000, new Watcher() {
             public void process(WatchedEvent event) {
                 // 不做处理
             }
