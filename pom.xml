@@ -8,5 +8,6 @@
     <module>geewaza-commons</module>
     <module>geewaza-web-test</module>
     <module>geewaza-mybatis-test</module>
+    <module>geewaza-springmvc-test</module>
   </modules>
 </project>
