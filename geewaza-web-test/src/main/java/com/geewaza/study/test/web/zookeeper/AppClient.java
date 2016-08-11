@@ -20,7 +20,7 @@ public class AppClient {
      * 连接zookeeper
      */
     public void connectZookeeper() throws Exception {
-        zk = new ZooKeeper("localhost:4180,localhost:4181,localhost:4182", 5000, new Watcher() {
+        zk = new ZooKeeper("test.geewaza.com:2181,test.geewaza.com:2182,test.geewaza.com:2183", 5000, new Watcher() {
             public void process(WatchedEvent event) {
                 // 如果发生了"/sgroup"节点下的子节点变化事件, 更新server列表, 并重新注册监听
                 if (event.getType() == Event.EventType.NodeChildrenChanged
