@@ -31,7 +31,6 @@ public class ShardedRedisManager implements RedisManager{
 		}
 		pool = new ShardedJedisPool(jedisPoolConfig, jedisShardInfos);
 		logger.info("初始化RedisServer:"+ servers);
-
 	}
 
 	public ShardedRedisManager(List<HostAndPort> servers, JedisPoolConfig jedisPoolConfig) {

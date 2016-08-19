@@ -11,6 +11,14 @@
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd"
 	default-autowire="byName">
 
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:/config.properties</value>
+				<value>classpath*:/redis_config.properties</value>
+			</list>
+		</property>
+	</bean>
 	<context:component-scan base-package="com.geewaza.study.test.web" />
 	<import resource="data-sources.xml" />
 	<!--
@@ -18,5 +26,30 @@
 
 	<import resource="spider-config.xml" />
 	 -->
+
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<!-- 控制一个pool可分配多少个jedis实例 -->
+		<property name="maxTotal" value="${redis.maxTotal}"/>
+		<!-- 控制一个pool最多有多少个状态为idle(空闲)的jedis实例 -->
+		<property name="maxIdle" value="${redis.maxIdle}"/>
+		<property name="minIdle" value="${redis.minIdle}"/>
+		<!-- 表示当borrow一个jedis实例时，最大的等待时间，如果超过等待时间，则直接抛出JedisConnectionException -->
+		<property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+		<!-- 在borrow一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的 -->
+		<property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+		<property name="testOnReturn" value="${redis.testOnReturn}"/>
+		<property name="testWhileIdle" value="${redis.testWhileIdle}"/>
+	</bean>
+
+	<bean id="sentinelRedisManager" class="com.geewaza.study.commons.jedis.SentinelRedisManager">
+		<constructor-arg name="master" value="${redis.master}"/>
+		<constructor-arg name="servers" value="${redis.sentinel}"/>
+		<constructor-arg name="jedisPoolConfig" ref="jedisPoolConfig"/>
+	</bean>
+
+	<bean id="shardedRedisManager" class="com.geewaza.study.commons.jedis.ShardedRedisManager">
+		<constructor-arg name="servers" value="${redis.servers}"/>
+		<constructor-arg name="jedisPoolConfig" ref="jedisPoolConfig"/>
+	</bean>
 
 </beans>

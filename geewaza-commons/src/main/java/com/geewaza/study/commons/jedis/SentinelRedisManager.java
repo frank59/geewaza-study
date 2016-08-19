@@ -10,13 +10,12 @@ import java.util.*;
 
 public class SentinelRedisManager implements RedisManager{
 	private static Logger logger = LoggerFactory.getLogger(SentinelRedisManager.class);
-	public static final String DEFAULT_MASTER_NAME = "DEFAULT_MASTER";
 
 	private static final int ERROR_TIMES = 5;
 	private JedisSentinelPool pool;
 
 	private List<HostAndPort> serverList;
-	public SentinelRedisManager(String servers, JedisPoolConfig jedisPoolConfig) {
+	public SentinelRedisManager(String master, String servers, JedisPoolConfig jedisPoolConfig) {
 		Set<String> sentinels = new HashSet<String>();
 		this.serverList = new ArrayList<HostAndPort>();
 		for (String server : servers.split(",")) {
@@ -25,21 +24,19 @@ public class SentinelRedisManager implements RedisManager{
 			sentinels.add(hostAndPort.toString());
 			serverList.add(hostAndPort);
 		}
-		pool = new JedisSentinelPool(DEFAULT_MASTER_NAME, sentinels, jedisPoolConfig);
+		pool = new JedisSentinelPool(master, sentinels, jedisPoolConfig);
 		logger.info("初始化RedisServer:"+ servers);
-
 	}
 
 
-	public SentinelRedisManager(List<HostAndPort> servers, JedisPoolConfig jedisPoolConfig) {
+	public SentinelRedisManager(String master, List<HostAndPort> servers, JedisPoolConfig jedisPoolConfig) {
 		this.serverList = servers;
 		Set<String> sentinels = new HashSet<String>();
 		for(HostAndPort server : servers) {
 			sentinels.add(server.toString());
 		}
-		pool = new JedisSentinelPool(DEFAULT_MASTER_NAME, sentinels, jedisPoolConfig);
+		pool = new JedisSentinelPool(master, sentinels, jedisPoolConfig);
 		logger.info("初始化RedisServer:"+ servers);
-
 	}
 
 	public List<HostAndPort> getServerList() {
