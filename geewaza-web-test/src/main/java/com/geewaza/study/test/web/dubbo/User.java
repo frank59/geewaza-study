@@ -1,9 +1,11 @@
 package com.geewaza.study.test.web.dubbo;
 
+import java.io.Serializable;
+
 /**
  * Created by wangh on 2016/8/21.
  */
-public class User {
+public class User implements Serializable {
 
 	private String name;
 	private int age;

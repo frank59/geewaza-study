@@ -19,6 +19,7 @@ public class HelloProviderMain {
 			//保证程序不退出
 			try {
 				TimeUnit.SECONDS.sleep(1);
+				System.out.println("sleep 1sec..");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
