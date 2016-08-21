@@ -14,7 +14,6 @@ public class HelloProviderMain {
 	public static void main(String[] args) {
 
 		ClassPathXmlApplicationContext  context = new ClassPathXmlApplicationContext("classpath:" + CONTEXT_FILE);
-		context.start();
 		while (true) {
 			//保证程序不退出
 			try {
