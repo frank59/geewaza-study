@@ -6,4 +6,4 @@ MAIN_CLASS='com.geewaza.study.test.web.dubbo.main.HelloProviderMain'
 
 
 cd $PROJECT_HOME
-nohup $JAVA_HOME/bin/java -cp $CLASSPATH $VMPARAMS $MAIN_CLASS >> /opt/logs/HelloProviderMain_nohup.log &
+nohup $JAVA_HOME/bin/java -cp $CLASSPATH $VMPARAMS $MAIN_CLASS > /opt/logs/HelloProviderMain_nohup.log &

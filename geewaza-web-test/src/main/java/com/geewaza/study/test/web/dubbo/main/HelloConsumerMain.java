@@ -1,7 +1,6 @@
 package com.geewaza.study.test.web.dubbo.main;
 
 import com.geewaza.study.test.web.dubbo.HelloService;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -12,7 +11,7 @@ public class HelloConsumerMain {
 
 	public static void main(String[] args) {
 
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:" + CONTEXT_FILE);
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:" + CONTEXT_FILE);
 
 		HelloService helloService = context.getBean("helloService", HelloService.class);
 		System.out.println(helloService.sayHello("Frank"));
