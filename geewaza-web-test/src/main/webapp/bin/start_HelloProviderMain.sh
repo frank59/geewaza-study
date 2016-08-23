@@ -1,4 +1,5 @@
 #!/bin/bash
+export LANG=zh_CN.UTF-8
 PROJECT_HOME='/opt/webapp/geewaza-web-test/WEB-INF'
 VMPARAMS='-Xmx1024m -server -XX:PermSize=100m'
 CLASSPATH='.:classes:bin:lib/*:target/test-class:target/classes'
