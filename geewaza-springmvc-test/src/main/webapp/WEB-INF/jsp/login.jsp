@@ -13,7 +13,7 @@
 </head>
 <body>
     <c:if test="${!empty error}">
-        <p color="red"><c:out value="${error}"/></p>
+        <p style="color:red;"><c:out value="${error}"/></p>
     </c:if>
     <form action="<c:url value="/loginCheck.html"/>" method="post">
         用户名：

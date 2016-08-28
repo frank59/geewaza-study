@@ -23,7 +23,7 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
           p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://192.168.11.209:3306/test"
+          p:url="jdbc:mysql://test.geewaza.com:3306/test"
           p:username="test_user"
           p:password="123456"
     >
