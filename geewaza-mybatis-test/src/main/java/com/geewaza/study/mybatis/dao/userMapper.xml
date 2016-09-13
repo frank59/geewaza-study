@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geewaza.study.mybatis.dao.UserDao">
+    <resultMap id="UserResultMap" type="com.geewaza.study.mybatis.domain.User">
+        <id column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="credits" jdbcType="INTEGER" property="credits" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="last_visit" jdbcType="DATE" property="lastVisit" />
+        <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultType="com.geewaza.study.mybatis.domain.User" resultMap="UserResultMap">
+        SELECT * FROM t_user WHERE user_id=#{id}
+    </select>
+
+    <insert id="insert" parameterType="com.geewaza.study.mybatis.domain.User">
+        INSERT INTO t_user (user_name, credits, password, last_visit, last_ip)
+        VALUES (#{userName}, #{credits}, #{password}, #{lastVisit}, #{lastIp})
+    </insert>
+
+</mapper>
