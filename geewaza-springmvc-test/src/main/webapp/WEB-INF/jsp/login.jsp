@@ -10,6 +10,16 @@
 <html>
 <head>
     <title>论坛登录</title>
+    <script language="JavaScript" href="assets/js/jquery-1.9.0.min.js"></script>
+    <!-- Le styles -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="css/custom-theme/jquery-ui-1.10.3.theme.css">-->
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="assets/js/google-code-prettify/prettify.css">
 </head>
 <body>
     <c:if test="${!empty error}">

@@ -11,11 +11,11 @@
 	http://www.springframework.org/schema/mvc 
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd"
 	default-autowire="byName">
-	<context:component-scan base-package="com.geewaza.springmvc"></context:component-scan>
+	<context:component-scan base-package="com.geewaza.springmvc.controller"></context:component-scan>
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-	p:prefix="/WEB-INF/views/"
-	p:suffix=".jsp">
-	</bean>
+		  p:viewClass="org.springframework.web.servlet.view.JstlView"
+		  p:prefix="/WEB-INF/jsp/"
+		  p:suffix=".jsp"/>
 
 
 </beans>
