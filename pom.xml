@@ -9,5 +9,6 @@
     <module>geewaza-web-test</module>
     <module>geewaza-mybatis-test</module>
     <module>geewaza-springmvc-test</module>
+    <module>geewaza-util</module>
   </modules>
 </project>
