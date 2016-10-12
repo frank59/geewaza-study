@@ -2,6 +2,7 @@ package com.geewaza.study.util.redis;
 
 
 import org.apache.log4j.Logger;
+import redis.clients.jedis.*;
 
 import java.util.*;
 

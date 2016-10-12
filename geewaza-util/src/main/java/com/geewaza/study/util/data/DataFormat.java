@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.geewaza.study.util;
+package com.geewaza.study.util.data;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -475,9 +475,5 @@ public class DataFormat {
 		}
 		resultBuilder.append("]");
 		return resultBuilder.toString();
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(formatLocalNumber(123456890000l));
 	}
 }

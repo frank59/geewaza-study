@@ -1,4 +1,4 @@
-package com.geewaza.study.util;
+package com.geewaza.study.util.thread;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
