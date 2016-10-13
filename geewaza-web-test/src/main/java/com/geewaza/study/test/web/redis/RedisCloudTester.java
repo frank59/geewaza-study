@@ -1,6 +1,5 @@
 package com.geewaza.study.test.web.redis;
 
-import com.geewaza.study.commons.jedis.RedisManager;
 import com.geewaza.study.commons.jedis.SentinelRedisManager;
 import com.geewaza.study.commons.jedis.ShardedRedisManager;
 import org.springframework.context.ApplicationContext;

@@ -94,6 +94,11 @@
 			<artifactId>geewaza-commons</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.geewaza.study.commons</groupId>
+			<artifactId>geewaza-util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- 内部依赖end -->
 		<dependency>
 			<groupId>javax.servlet</groupId>

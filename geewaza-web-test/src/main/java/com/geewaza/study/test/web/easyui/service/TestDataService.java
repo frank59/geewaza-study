@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.geewaza.study.commons.util.DataFormat;
+import com.geewaza.study.commons.util.WebUtils;
 import com.geewaza.study.test.web.easyui.dao.UsersDao;
 import com.geewaza.study.test.web.easyui.pojo.User;
 import org.apache.commons.lang3.StringUtils;
@@ -17,8 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.geewaza.study.commons.util.DataFormat;
-import com.geewaza.study.commons.util.WebUtils;
 import com.geewaza.study.test.web.easyui.pojo.PromoteWord;
 import com.geewaza.study.test.web.easyui.common.State;
 import com.geewaza.study.test.web.service.AbstractService;
