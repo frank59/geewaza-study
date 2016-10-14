@@ -3,6 +3,10 @@
  */
 package com.geewaza.study.commons.util;
 
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -475,6 +479,31 @@ public class DataFormat {
 		}
 		resultBuilder.append("]");
 		return resultBuilder.toString();
+	}
+
+	public static JSONObject parseParam(String url) throws JSONException {
+		if (StringUtils.isBlank(url)) {
+			return null;
+		}
+		String[] parse1 = url.split("\\?");		//切分url 把参数区划分出来
+		if (parse1.length <= 1) {//URL不包含参数区
+			return null;
+		}
+		String paramArea = parse1[1];
+		String[] params = paramArea.split("&");
+		JSONObject result = new JSONObject();
+		for (String param : params) {
+			String[] paramPair = param.split("=");
+			if (paramPair.length == 2) {
+				String key = paramPair[0];
+				String value = paramPair[1];
+				result.put(key, value);
+			} else if (paramPair.length == 1) {
+				String key = paramPair[0];
+				result.put(key, true);
+			}
+		}
+		return result;
 	}
 	
 	public static void main(String[] args) {
