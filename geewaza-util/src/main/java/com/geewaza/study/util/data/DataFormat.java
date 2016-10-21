@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Stack;
 
 /**
  * @author william
@@ -458,6 +459,20 @@ public class DataFormat {
 		return progressPrint((double) x/(double) y);
 	}
 
+	/**
+	 * 返回一个控制台能显示的进度条
+	 * @param start
+	 * @param current
+	 * @param end
+	 * @param perSeconds 每秒处理的个数
+     * @return
+     */
+	public static String progressPrint(long start, long current, long end, double perSeconds) {
+		long x = current - start;
+		long y = end - start;
+		return progressPrint((double) x/(double) y) + " " + lastTime((end - current), perSeconds);
+	}
+
 	public static String progressPrint(double percent) {
 		StringBuilder resultBuilder = new StringBuilder();
 
@@ -480,6 +495,55 @@ public class DataFormat {
 		resultBuilder.append("]");
 		return resultBuilder.toString();
 	}
+
+	/**
+	 * 计算剩余时间
+	 * @param last
+	 * @param perSeconds
+     * @return
+     */
+	public static String lastTime(long last, double perSeconds) {
+		if (perSeconds == 0.0) {
+			return "";
+		}
+		long milliSeconds = (long)((last / perSeconds) * 1000.0);
+		return "剩余时间：" + parseMillis(milliSeconds);
+	}
+
+	/**
+	 * 将毫秒耗时转化成时间
+	 * @param milliSeconds
+	 * @return
+     */
+	public static String parseMillis(long milliSeconds) {
+		Stack<String> resultStack = new Stack<String>();
+		long seconds = milliSeconds / 1000;
+
+		if (seconds > 0) {
+			resultStack.push((seconds % 60) + "秒");
+			long minutes = seconds / 60;
+			if (minutes > 0) {
+				resultStack.push((minutes % 60) + "分钟");
+				long hours = minutes / 60;
+				if (hours > 0) {
+					resultStack.push((hours % 24) + "小时");
+					long days = hours / 24;
+					if (days > 0) {
+						resultStack.push(days + "天");
+					}
+				}
+			}
+		} else {
+			resultStack.push("0秒");
+		}
+		StringBuilder sb = new StringBuilder();
+		while (resultStack.size() != 0) {
+			String time = resultStack.pop();
+			sb.append(time);
+		}
+		return sb.toString();
+	}
+
 
 
 	public static JSONObject parseParam(String url) {
