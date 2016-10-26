@@ -10,5 +10,6 @@
     <module>geewaza-mybatis-test</module>
     <module>geewaza-springmvc-test</module>
     <module>geewaza-util</module>
+    <module>geewaza-react</module>
   </modules>
 </project>

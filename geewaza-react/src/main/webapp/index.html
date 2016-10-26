@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js"/>
+<div id="container"></div>
+<script type="text/jsx">
+    var Hello = React.createClass({
+        render: function() {
+            return <div>Hello {this.props.name}</div>;
+        }
+    });
+    React.render(<Hello name="World" />, document.getElementById("container"));
+</script>
+</body>
+
+</html>
