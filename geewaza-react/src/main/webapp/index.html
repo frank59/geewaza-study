@@ -3,18 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="react/react.js"></script>
+    <script src="react/react-dom.js"></script>
+    <script src="react/browser.min.js"></script>
 </head>
 <body>
-<script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js"/>
-<div id="container"></div>
-<script type="text/jsx">
-    var Hello = React.createClass({
+<div id="example1"></div>
+<script type="text/babel">
+    var words = "Hello world!";
+    ReactDOM.render(
+            <div>{words}</div>,
+            document.getElementById("example1")
+    );
+</script>
+<div id="example2"></div>
+<script type="text/babel">
+    var HelloMessage = React.createClass({
+        getDefaultProps : function(){
+          return {
+              text:"this is a message!"
+          };
+        },
+        propTypes: {
+            name: React.PropTypes.string.isRequired,        //name 值是必须的 且必须是string类型
+        },
         render: function() {
-            return <div>Hello {this.props.name}</div>;
+            return <div><h1>Hello {this.props.name}</h1> <p>{this.props.text}</p></div>;
         }
     });
-    React.render(<Hello name="World" />, document.getElementById("container"));
+    ReactDOM.render(<HelloMessage name="Geewaza"/>, document.getElementById("example2"));
 </script>
-</body>
+<div id="example3"></div>
+<script type="text/babel">
+    var NotesList = React.createClass({
+        render: function() {
+            return ( <ol> {
+                        React.Children.map(this.props.children, function (child) {
+                        return <li>{child}</li>;
+                    })}</ol>
+            );
+        }
+    });
+    ReactDOM.render(
+            <NotesList>
+                <span>hello</span>
+                <span>world</span>
+            </NotesList>,
+            document.getElementById("example3")
+    );
+</script>
+<div id="example4"></div>
+<script type="text/babel">
+    var MyComponent = React.createClass({
+        handleClick: function() {
+            this.refs.myTextInput.focus();
+        },
+        render: function() {
+            return (
+                    <div>
+                    <input type="text" ref="myTextInput" />
+                    <input type="button" value="Focus the text input" onClick={this.handleClick} />
+            </div>
+            );
+        }
+    });
+    ReactDOM.render(
+    <MyComponent />,
+            document.getElementById('example4')
+    );
+</script>
+<div id="example5"></div>
+<script type="text/babel">
+    var LikeButton = React.createClass({
+        getInitialState: function(){
+            return {liked: false};
+        },
+        handleClick: function(event){
+            this.setState({liked: !this.state.liked});
+        },
+        render: function(){
+            var text = this.state.liked? 'like': 'haven\'t liked';
+            return (
+                    <p onClick={this.handleClick}>You {text} this. Click to toggle.</p>
+            );
+        },
+    });
+    ReactDOM.render(
+    <LikeButton />,
+            document.getElementById('example5')
+    );
+</script>
+<div id="example6"></div>
+<script type="text/babel">
+    var Input = React.createClass({
+        getInitialState: function(){
+            return {value:"Hello!"};
+        },
+        handleChange:function(event){
+            this.setState({value:event.target.value});
+        },
+        render: function(){
+            var value = this.state.value;
+            return(
+                    <div>
+                        <input type="text" value={value} onChange={this.handleChange} />
+                        <p>{value}</p>
+                    </div>
+            );
+        },
 
+    });
+    ReactDOM.render(<Input />, document.getElementById("example6"));
+</script>
+
+</body>
 </html>
