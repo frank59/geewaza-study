@@ -11,4 +11,25 @@
     <module>geewaza-springmvc-test</module>
     <module>geewaza-util</module>
   </modules>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.compile.level>1.7</java.compile.level>
+    <spring.version>3.2.5.RELEASE</spring.version>
+    <jackson.version>2.2.3</jackson.version>
+    <slf4j.version>1.7.5</slf4j.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <forkMode>pertest</forkMode>
+          <skip>true</skip>
+          <testFailureIgnore>true</testFailureIgnore>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

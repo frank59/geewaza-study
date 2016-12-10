@@ -11,11 +11,6 @@
     <artifactId>geewaza-mybatis-test</artifactId>
     <packaging>war</packaging>
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.compile.level>1.6</java.compile.level>
-        <spring.version>3.2.5.RELEASE</spring.version>
-        <jackson.version>2.2.3</jackson.version>
-        <slf4j.version>1.7.5</slf4j.version>
         <package.name>geewaza-web-test</package.name>
     </properties>
     <profiles>
@@ -69,7 +64,7 @@
                 <configuration>
                     <source>${java.compile.level}</source>
                     <target>${java.compile.level}</target>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>

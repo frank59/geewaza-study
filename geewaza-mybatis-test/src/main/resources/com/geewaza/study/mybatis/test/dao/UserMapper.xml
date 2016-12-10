@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geewaza.study.mybatis.test.dao.UserDAO">
+  <resultMap id="BaseResultMap" type="com.geewaza.study.mybatis.test.model.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+  </resultMap>
+
+  <select id="listAllUser" resultType="com.geewaza.study.mybatis.test.model.User">
+    SELECT * FROM t_user ;
+  </select>
+
+  <insert id="saveUser" parameterType="com.geewaza.study.mybatis.test.model.User">
+    INSERT INTO t_user(NAME, age, gender)
+    VALUES (#{name}, #{age}, #{gender, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler});
+  </insert>
+
+  <update id="dropTable">
+    DROP TABLE  IF EXISTS t_user;
+  </update>
+
+  <update id="createTable">
+    CREATE TABLE IF NOT EXISTS t_user(
+      id INT PRIMARY KEY AUTO_INCREMENT,
+      NAME VARCHAR(20) NOT NULL,
+      age INT DEFAULT 0,
+      gender SMALLINT DEFAULT NULL
+    );
+  </update>
+
+  <insert  id="saveUserList">
+    INSERT INTO t_user(NAME, age, gender)
+    VALUES 
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.name}, #{item.age}, #{item.gender, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler})
+    </foreach>
+  </insert >
+</mapper>
