@@ -11,6 +11,7 @@
     <module>geewaza-springmvc-test</module>
     <module>geewaza-util</module>
     <module>geewaza-react</module>
+    <module>geewaza-test01</module>
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
