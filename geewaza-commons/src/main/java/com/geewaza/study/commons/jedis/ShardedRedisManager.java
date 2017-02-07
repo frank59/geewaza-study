@@ -6,7 +6,9 @@ import redis.clients.jedis.*;
 
 import java.util.*;
 
-
+/**
+ * 分片Redis方法工具
+ */
 public class ShardedRedisManager implements RedisManager{
 	
 	private static Logger logger = Logger.getLogger(ShardedRedisManager.class);

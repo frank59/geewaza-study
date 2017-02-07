@@ -7,7 +7,9 @@ import redis.clients.jedis.*;
 
 import java.util.*;
 
-
+/**
+ * 哨兵Redis接口工具
+ */
 public class SentinelRedisManager implements RedisManager{
 	private static Logger logger = LoggerFactory.getLogger(SentinelRedisManager.class);
 
