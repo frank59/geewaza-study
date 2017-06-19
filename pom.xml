@@ -12,6 +12,10 @@
     <module>geewaza-util</module>
     <module>geewaza-react</module>
     <module>geewaza-test01</module>
+    <module>geewaza-study-dao</module>
+    <module>geewaza-study-dao</module>
+    <module>geewaza-study-dao-mybatis1</module>
+    <module>geewaza-study-dao-test</module>
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
