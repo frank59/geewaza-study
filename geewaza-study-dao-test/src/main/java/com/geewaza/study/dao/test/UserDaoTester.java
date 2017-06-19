@@ -2,8 +2,8 @@ package com.geewaza.study.dao.test;
 
 import java.util.List;
 
-import com.geewaza.study.dao.UserMapper;
-import com.geewaza.study.dao.pojo.User;
+import com.geewaza.study.dao.UserDAO;
+import com.geewaza.study.dao.pojo.UserDO;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,12 +18,12 @@ public class UserDaoTester {
     @Test
     public void saveUser() {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-        User user = new User();
+        UserDO user = new UserDO();
         user.setId(1);
         user.setName("Tom");
 
-        UserMapper userMapper = context.getBean("userMapper", UserMapper.class);
-        int result = userMapper.insert(user);
+        UserDAO userDAO = context.getBean("userDAO", UserDAO.class);
+        int result = userDAO.insert(user);
         System.out.println(result);
 
     }
@@ -31,8 +31,8 @@ public class UserDaoTester {
     public void queryUser() {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 
-        UserMapper userMapper = context.getBean("userMapper", UserMapper.class);
-        List<User> userList = userMapper.selectAll();
+        UserDAO userDAO = context.getBean("userDAO", UserDAO.class);
+        List<UserDO> userList = userDAO.selectAll();
         System.out.println(userList);
 
     }
