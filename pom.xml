@@ -20,7 +20,7 @@
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.compile.level>1.7</java.compile.level>
+    <java.compile.level>1.8</java.compile.level>
     <spring.version>3.2.5.RELEASE</spring.version>
     <jackson.version>2.2.3</jackson.version>
     <slf4j.version>1.7.5</slf4j.version>
