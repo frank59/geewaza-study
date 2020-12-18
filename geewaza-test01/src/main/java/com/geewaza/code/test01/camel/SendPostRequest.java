@@ -115,17 +115,11 @@ public class SendPostRequest {
          * @throws IOException
          */
         private String execute(HttpUriRequest method, CloseableHttpClient httpClient) throws RuntimeException, IOException {
-            CloseableHttpResponse response = null;
-            try {
-                response = httpClient.execute(method);
+            try (CloseableHttpResponse response = httpClient.execute(method)) {
                 HttpEntity entity = response.getEntity();
                 return EntityUtils.toString(entity, method.getFirstHeader(HttpHeaders.CONTENT_ENCODING).getValue());
             } catch (Exception e) {
                 throw new RuntimeException(e.getMessage(), e);
-            } finally {
-                if (response != null) {
-                    response.close();
-                }
             }
         }
 
