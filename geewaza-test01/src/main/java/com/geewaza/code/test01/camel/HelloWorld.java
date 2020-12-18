@@ -50,9 +50,10 @@ public class HelloWorld extends RouteBuilder {
 
     /**
      * 这个处理器用来完成输入的json格式的转换
+     *
      * @author yinwenjie
      */
-    public class HttpProcessor implements Processor {
+    public static class HttpProcessor implements Processor {
 
         /* (non-Javadoc)
          * @see org.apache.camel.Processor#process(org.apache.camel.Exchange)
@@ -61,13 +62,13 @@ public class HelloWorld extends RouteBuilder {
         public void process(Exchange exchange) throws Exception {
             // 因为很明确消息格式是http的，所以才使用这个类
             // 否则还是建议使用org.apache.camel.Message这个抽象接口
-            HttpMessage message = (HttpMessage)exchange.getIn();
-            InputStream bodyStream =  (InputStream)message.getBody();
+            HttpMessage message = (HttpMessage) exchange.getIn();
+            InputStream bodyStream = (InputStream) message.getBody();
             String inputContext = this.analysisMessage(bodyStream);
             bodyStream.close();
 
             // 存入到exchange的out区域
-            if(exchange.getPattern() == ExchangePattern.InOut) {
+            if (exchange.getPattern() == ExchangePattern.InOut) {
                 Message outMessage = exchange.getOut();
                 outMessage.setBody(inputContext + " || out");
             }
@@ -75,6 +76,7 @@ public class HelloWorld extends RouteBuilder {
 
         /**
          * 从stream中分析字符串内容
+         *
          * @param bodyStream
          * @return
          */
@@ -82,13 +84,13 @@ public class HelloWorld extends RouteBuilder {
             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
             byte[] contextBytes = new byte[4096];
             int realLen;
-            while((realLen = bodyStream.read(contextBytes , 0 ,4096)) != -1) {
+            while ((realLen = bodyStream.read(contextBytes, 0, 4096)) != -1) {
                 outStream.write(contextBytes, 0, realLen);
             }
 
             // 返回从Stream中读取的字串
             try {
-                return new String(outStream.toByteArray() , "UTF-8");
+                return new String(outStream.toByteArray(), "UTF-8");
             } finally {
                 outStream.close();
             }
