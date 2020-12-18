@@ -9,6 +9,7 @@ import org.apache.camel.model.ModelCamelContext;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p>use camel to copy file</p>
@@ -90,7 +91,7 @@ public class HelloWorld extends RouteBuilder {
 
             // 返回从Stream中读取的字串
             try {
-                return new String(outStream.toByteArray(), "UTF-8");
+                return new String(outStream.toByteArray(), StandardCharsets.UTF_8);
             } finally {
                 outStream.close();
             }
