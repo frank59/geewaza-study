@@ -18,8 +18,8 @@ import java.util.UUID;
 public class FileCopierWithCamel {
 
     public static void main(String[] args) throws Exception {
-        String resourceInPath = ToolMethods.getResourceFile("inbox").getAbsolutePath();
-        String resourceOutPath = ToolMethods.getResourceFile("outbox").getAbsolutePath();
+        final String resourceInPath = ToolMethods.getResourceFile("inbox").getAbsolutePath();
+        final String resourceOutPath = ToolMethods.getResourceFile("outbox").getAbsolutePath();
         System.out.println("resourceInPath " + resourceInPath);
         System.out.println("resourceOutPath " + resourceOutPath);
 
