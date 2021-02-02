@@ -17,6 +17,7 @@
     <module>geewaza-study-dao-mybatis1</module>
     <module>geewaza-study-dao-test</module>
       <module>geewaza-elasticesearch-study</module>
+      <module>camel-study</module>
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

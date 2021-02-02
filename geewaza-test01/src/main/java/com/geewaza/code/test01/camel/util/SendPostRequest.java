@@ -1,4 +1,4 @@
-package com.geewaza.code.test01.camel;
+package com.geewaza.code.test01.camel.util;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
